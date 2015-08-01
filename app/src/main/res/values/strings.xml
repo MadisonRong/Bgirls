@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Bgirls</string>
+
+    <string name="title_section1">首页</string>
+    <string name="title_section2">分类1</string>
+    <string name="title_section3">分类2</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_disclaimers">声明</string>
+    
+    <string name="toast_disclaimers">本 app 是本人练手所用的第一个 app，简单把 sexy.faceks.com 转化为 app。</string>
+    <string name="title_activity_test">TestActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="toast_network_error">网络异常，请稍候再试</string>
+    <string name="title_activity_detail">DetailActivity</string>
+</resources>
