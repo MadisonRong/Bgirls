@@ -1,7 +1,6 @@
 package com.madisonrong.bgirls.views.adapters;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import com.madisonrong.bgirls.R;
 import com.madisonrong.bgirls.activities.DetailActivity;
 import com.madisonrong.bgirls.models.Girl;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 
@@ -19,7 +19,6 @@ import java.util.Collection;
 public class BGirlsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGirlsRecyclerViewAdapter.ViewHloder> {
 
     private Activity activity;
-    private View.OnClickListener listener;
 
     public BGirlsRecyclerViewAdapter(Activity activity) {
         this.activity = activity;
@@ -35,25 +34,33 @@ public class BGirlsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGi
         this.activity = activity;
     }
 
-    public void setListener(View.OnClickListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public ViewHloder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHloder(activity.getLayoutInflater().inflate(R.layout.item_girls, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHloder holder, final int position) {
-        Bitmap bitmap = this.get(position).getPicture();
+    public void onBindViewHolder(final ViewHloder holder, final int position) {
         //设置图片
-        holder.imageView.setImageBitmap(bitmap);
+        holder.imageView.setImageBitmap(this.get(position).getPicture());
+
+        Girl girl = this.get(position);
+        holder.imageView.setImageBitmap(null);
+        Picasso.with(holder.imageView.getContext()).cancelRequest(holder.imageView);
+            Picasso picasso = Picasso.with(holder.imageView.getContext());
+            picasso.setIndicatorsEnabled(true);
+            picasso.setLoggingEnabled(true);
+            picasso.load(this.get(position).getImgUrl())
+                    .placeholder(R.drawable.drawer_loading)
+                    .error(R.drawable.drawer_shadow)
+                    .into(holder.imageView);
+        holder.itemView.setTag(girl);
+
+        final String url = this.get(position).getUrl();
         //设置监听器
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = BGirlsRecyclerViewAdapter.this.get(position).getUrl();
                 DetailActivity.actionStart(v.getContext(), url);
             }
         });

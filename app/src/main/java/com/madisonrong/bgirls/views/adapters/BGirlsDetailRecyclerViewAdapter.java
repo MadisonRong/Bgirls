@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.madisonrong.bgirls.R;
 import com.madisonrong.bgirls.models.Girl;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 
@@ -17,9 +18,11 @@ import java.util.Collection;
 public class BGirlsDetailRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGirlsDetailRecyclerViewAdapter.ViewHolder> {
 
     private Activity activity;
+    private ImageView imageView;
 
-    public BGirlsDetailRecyclerViewAdapter(Activity activity) {
+    public BGirlsDetailRecyclerViewAdapter(Activity activity, ImageView imageView) {
         this.activity = activity;
+        this.imageView = imageView;
     }
 
     public BGirlsDetailRecyclerViewAdapter(int cappacity, Activity activity) {
@@ -32,14 +35,48 @@ public class BGirlsDetailRecyclerViewAdapter extends BaseRecyclerViewAdapter<Gir
         this.activity = activity;
     }
 
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(activity.getLayoutInflater().inflate(R.layout.item_girl, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageView.setImageBitmap(this.get(position).getPicture());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        Girl girl = this.get(position);
+        holder.imageView.setImageBitmap(null);
+        Picasso picasso = Picasso.with(holder.imageView.getContext());
+        picasso.setIndicatorsEnabled(true);
+        picasso.setLoggingEnabled(true);
+        picasso.load(this.get(position).getImgUrl())
+                .placeholder(R.drawable.drawer_loading)
+                .error(R.drawable.drawer_shadow)
+                .resize(100, 100)
+                .centerCrop()
+                .into(holder.imageView);
+        holder.itemView.setTag(girl);
+
+        if (position == 0 && this.size() > 0) {
+            Picasso.with(imageView.getContext())
+                    .load(this.get(0).getImgUrl())
+                    .placeholder(R.drawable.drawer_loading)
+                    .error(R.drawable.drawer_error)
+                    .into(imageView);
+        }
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picasso.with(imageView.getContext())
+                        .load(BGirlsDetailRecyclerViewAdapter.this.get(position).getImgUrl())
+                        .placeholder(R.drawable.drawer_loading)
+                        .error(R.drawable.drawer_error)
+                        .into(imageView);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

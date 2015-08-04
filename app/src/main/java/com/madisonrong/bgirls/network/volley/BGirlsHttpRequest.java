@@ -4,8 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
@@ -53,16 +57,17 @@ public class BGirlsHttpRequest {
 //        if (requestQueue == null) {
 //            Cache cache = new DiskBasedCache(ctx.getCacheDir(), 1024 * 1024);
 //            Network network = new BasicNetwork(new HurlStack());
-//            return new RequestQueue(cache, network);
+//            requestQueue =  new RequestQueue(cache, network);
+//            requestQueue.start();
 //        }
 //        return requestQueue;
         if (requestQueue == null) {
-            return Volley.newRequestQueue(ctx, new HurlStack(), 1024 * 1024);
+            return Volley.newRequestQueue(ctx.getApplicationContext(), new HurlStack(), 1024 * 1024 * 1024);
         }
         return requestQueue;
     }
 
-    public <T> void addToRequestsQueue(Request<T> request){
+    public synchronized  <T> void addToRequestsQueue(Request<T> request){
         getRequestQueue().add(request);
     }
 

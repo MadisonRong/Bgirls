@@ -10,6 +10,7 @@ public class Girl {
     private String description;
     private Bitmap picture;
     private String url;
+    private String imgUrl;
 
     public Girl() {
     }
@@ -42,5 +43,13 @@ public class Girl {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

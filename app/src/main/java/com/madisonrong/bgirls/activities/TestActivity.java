@@ -32,7 +32,7 @@ public class TestActivity extends ActionBarActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
         BGirlsClient client = RetrofitGenerator.getService(BGirlsClient.class, url);
-        client.getPage("1", new Callback<String>() {
+        client.getPage(1, new Callback<String>() {
             @Override
             public void success(String string, Response response) {
                 webView.loadData(string, "text/html", "utf-8");

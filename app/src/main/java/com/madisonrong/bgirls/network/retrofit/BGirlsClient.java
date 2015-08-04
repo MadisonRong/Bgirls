@@ -11,7 +11,7 @@ import retrofit.http.Query;
  */
 public interface BGirlsClient {
     @GET("/")
-    void getPage(@Query("page") String page, Callback<String> callback);
+    void getPage(@Query("page") int page, Callback<String> callback);
 
     @GET("/post/{id}")
     void getGirl(@Path("id") String id, Callback<String> callback);

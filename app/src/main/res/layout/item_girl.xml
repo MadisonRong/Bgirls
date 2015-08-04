@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="0.2dp"
     app:cardCornerRadius="0dp">
 
     <LinearLayout
@@ -14,10 +13,12 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/item_girl_image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:minWidth="400dp"
-            android:maxWidth="600dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:minWidth="100dp"
+            android:maxWidth="100dp"
+            android:minHeight="100dp"
+            android:maxHeight="100dp"
             android:scaleType="fitCenter"
             tools:ignore="ContentDescription" />
     </LinearLayout>

@@ -3,15 +3,21 @@ package com.madisonrong.bgirls.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.madisonrong.bgirls.R;
 import com.madisonrong.bgirls.constant.BGirls;
+import com.madisonrong.bgirls.managers.BGirlsListManager;
 import com.madisonrong.bgirls.models.Girl;
 import com.madisonrong.bgirls.network.retrofit.BGirlsClient;
 import com.madisonrong.bgirls.network.retrofit.RetrofitGenerator;
@@ -44,9 +51,14 @@ public class DetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final ImageView imageView = (ImageView) findViewById(R.id.show_girl_container);
+
         recyclerView = (RecyclerView) findViewById(R.id.activity_detail_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this, OrientationHelper.VERTICAL, false));
-        bGirlsDetailRecyclerViewAdapter = new BGirlsDetailRecyclerViewAdapter(DetailActivity.this);
+        recyclerView.setLayoutManager(new GridLayoutManager(DetailActivity.this, 1, OrientationHelper.HORIZONTAL, false));
+        bGirlsDetailRecyclerViewAdapter = new BGirlsDetailRecyclerViewAdapter(DetailActivity.this, imageView);
         recyclerView.setAdapter(bGirlsDetailRecyclerViewAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -56,39 +68,8 @@ public class DetailActivity extends ActionBarActivity {
         String id = url.substring(position);
         Log.e("bgils.id", id);
 
-        BGirlsClient client= RetrofitGenerator.getService(BGirlsClient.class, BGirls.HOME_BASE_URL);
-        client.getGirl(id, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                Pattern pattern = Pattern.compile("<img src=\"(.*?)\"/>");
-                Matcher matcher = pattern.matcher(s);
-                while (matcher.find()) {
-                    String url = matcher.group(1);
-                    ImageRequest imageRequest = new ImageRequest(url,
-                            new com.android.volley.Response.Listener<Bitmap>() {
-                                @Override
-                                public void onResponse(Bitmap response) {
-                                    Girl girl = new Girl();
-                                    girl.setPicture(response);
-                                    bGirlsDetailRecyclerViewAdapter.add(0, girl);
-                                }
-                            }, 0, 0, ImageView.ScaleType.MATRIX, Bitmap.Config.RGB_565,
-                            new com.android.volley.Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("bgirls.network.error", error.getMessage());
-                                    Toast.makeText(DetailActivity.this, R.string.toast_network_error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                    BGirlsHttpRequest.getInstance(DetailActivity.this).addToRequestsQueue(imageRequest);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        BGirlsListManager bGirlsListManager = new BGirlsListManager(DetailActivity.this, bGirlsDetailRecyclerViewAdapter);
+        bGirlsListManager.getDetail(id);
     }
 
     @Override
@@ -101,6 +82,26 @@ public class DetailActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.e("bgirls.test", "hit the shit home button to up...");
+//                Intent upIntent = NavUtils.getParentActivityIntent(this);
+//                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+//                    Log.e("bgirls.test","fucking different task");
+//                    // 这个activity不是这个app任务的一部分, 所以当向上导航时创建
+//                    // 用合成后退栈(synthesized back stack)创建一个新任务。
+//                    TaskStackBuilder.create(this)
+//                            // 添加这个activity的所有父activity到后退栈中
+//                            .addNextIntentWithParentStack(upIntent)
+//                                    // 向上导航到最近的一个父activity
+//                            .startActivities();
+//                } else {
+//                    Log.e("bgirls.test","fucking same current task");
+//                    // 这个activity是这个app任务的一部分, 所以
+//                    // 向上导航至逻辑父activity.
+//                    NavUtils.navigateUpTo(this, upIntent);
+//                }
+                finish();
+                return true;
             case R.id.action_disclaimers:
                 Toast.makeText(DetailActivity.this, R.string.toast_disclaimers, Toast.LENGTH_SHORT).show();
                 break;
