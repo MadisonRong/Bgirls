@@ -1,56 +1,28 @@
 package com.madisonrong.bgirls.fragments;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.madisonrong.bgirls.R;
-
-import com.madisonrong.bgirls.activities.MainActivity;
-import com.madisonrong.bgirls.constant.BGirls;
 import com.madisonrong.bgirls.fragments.dummy.DummyContent;
-import com.madisonrong.bgirls.managers.BGirlsListManager;
-import com.madisonrong.bgirls.models.Girl;
-import com.madisonrong.bgirls.network.retrofit.BGirlsClient;
-import com.madisonrong.bgirls.network.retrofit.RetrofitGenerator;
-import com.madisonrong.bgirls.network.volley.BGirlsHttpRequest;
+import com.madisonrong.bgirls.managers.BGirlsNetWorkManager;
 import com.madisonrong.bgirls.views.adapters.BGirlsRecyclerViewAdapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -96,9 +68,11 @@ public class HomeFragment extends Fragment implements AbsListView.OnItemClickLis
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.e("bgirls.fragment", "home fragment create view");
 
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragment_home_swipe_refresh_layout);
+
         textView = (TextView) view.findViewById(android.R.id.empty);
         bGirlsRecyclerViewAdapter = new BGirlsRecyclerViewAdapter(30, getActivity());
-        final BGirlsListManager bGirlsListManager = new BGirlsListManager(getActivity(), bGirlsRecyclerViewAdapter);
+        final BGirlsNetWorkManager bGirlsNetWorkManager = new BGirlsNetWorkManager(getActivity(), bGirlsRecyclerViewAdapter);
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment_home_recyclerview);
         recyclerView.setAdapter(bGirlsRecyclerViewAdapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
@@ -107,19 +81,9 @@ public class HomeFragment extends Fragment implements AbsListView.OnItemClickLis
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-//                if (gridLayoutManager.findLastVisibleItemPosition() == bGirlsRecyclerViewAdapter.size() - 1 ) {
-//                    Log.e("bgirls.test", "last one has been showed.");
-//                    page += 1;
-//                    bGirlsListManager.getList(page);
-//                }
 
                 StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
                 int[] lastVisibleItems = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
-                int[] lastCompletelyVisibleItems = staggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(null);
-                Log.e("bgirls.test", "last visible items is : " + Arrays.toString(lastVisibleItems));
-                Log.e("bgirls.test", "last completely visible items is : " + Arrays.toString(lastCompletelyVisibleItems));
-                Log.e("bgirls.test", "adapter count is : " + bGirlsRecyclerViewAdapter.getItemCount());
                 int lastItem = Math.max(lastVisibleItems[0], lastVisibleItems[1]);
 
                 //先判断是否已经到底了
@@ -128,8 +92,7 @@ public class HomeFragment extends Fragment implements AbsListView.OnItemClickLis
                     if (canLoad) {
                         canLoad = false;
                         page += 1;
-                        Log.e("bgirls.test", "page is : " + page);
-                        bGirlsListManager.getList(page);
+                        bGirlsNetWorkManager.getList(page);
                     }
                 } else {
                     //加载完成后，上面的条件会判断失败，此时就可以修改canLoad条件
@@ -147,7 +110,14 @@ public class HomeFragment extends Fragment implements AbsListView.OnItemClickLis
             }
         });
 
-        bGirlsListManager.getList(page);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        bGirlsNetWorkManager.getList(page);
 
         return view;
     }

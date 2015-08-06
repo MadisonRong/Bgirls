@@ -2,43 +2,21 @@ package com.madisonrong.bgirls.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.madisonrong.bgirls.R;
-import com.madisonrong.bgirls.constant.BGirls;
-import com.madisonrong.bgirls.managers.BGirlsListManager;
-import com.madisonrong.bgirls.models.Girl;
-import com.madisonrong.bgirls.network.retrofit.BGirlsClient;
-import com.madisonrong.bgirls.network.retrofit.RetrofitGenerator;
-import com.madisonrong.bgirls.network.volley.BGirlsHttpRequest;
+import com.madisonrong.bgirls.managers.BGirlsNetWorkManager;
 import com.madisonrong.bgirls.views.adapters.BGirlsDetailRecyclerViewAdapter;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -68,8 +46,8 @@ public class DetailActivity extends ActionBarActivity {
         String id = url.substring(position);
         Log.e("bgils.id", id);
 
-        BGirlsListManager bGirlsListManager = new BGirlsListManager(DetailActivity.this, bGirlsDetailRecyclerViewAdapter);
-        bGirlsListManager.getDetail(id);
+        BGirlsNetWorkManager bGirlsNetWorkManager = new BGirlsNetWorkManager(DetailActivity.this, bGirlsDetailRecyclerViewAdapter);
+        bGirlsNetWorkManager.getDetail(id);
     }
 
     @Override

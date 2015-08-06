@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="style_girl" >
+        <item name="android:borderlessButtonStyle">@color/button_material_dark</item>
+    </style>
+
 </resources>

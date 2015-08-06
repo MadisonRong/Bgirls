@@ -32,14 +32,14 @@ import retrofit.client.Response;
 /**
  * Created by MadisonRong on 15/8/2.
  */
-public class BGirlsListManager {
+public class BGirlsNetWorkManager {
 
     private Context ctx;
     private BaseRecyclerViewAdapter adapter;
     private ReentrantLock lock = new ReentrantLock();
     public static boolean isLoading = false;
 
-    public BGirlsListManager(Context ctx, BaseRecyclerViewAdapter adapter) {
+    public BGirlsNetWorkManager(Context ctx, BaseRecyclerViewAdapter adapter) {
         this.adapter = adapter;
         this.ctx = ctx;
     }

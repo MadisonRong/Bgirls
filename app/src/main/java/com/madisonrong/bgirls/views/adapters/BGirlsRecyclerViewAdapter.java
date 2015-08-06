@@ -46,14 +46,15 @@ public class BGirlsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGi
 
         Girl girl = this.get(position);
         holder.imageView.setImageBitmap(null);
+        String imageUrl = this.get(position).getImgUrl().replace("thumbnail=500x0&quality=96", "thumbnail=550x0&quality=40");
         Picasso.with(holder.imageView.getContext()).cancelRequest(holder.imageView);
-            Picasso picasso = Picasso.with(holder.imageView.getContext());
-            picasso.setIndicatorsEnabled(true);
-            picasso.setLoggingEnabled(true);
-            picasso.load(this.get(position).getImgUrl())
-                    .placeholder(R.drawable.drawer_loading)
-                    .error(R.drawable.drawer_shadow)
-                    .into(holder.imageView);
+        Picasso picasso = Picasso.with(holder.imageView.getContext());
+//        picasso.setIndicatorsEnabled(true);
+        picasso.setLoggingEnabled(true);
+        picasso.load(imageUrl)
+                .placeholder(R.drawable.drawer_loading)
+                .error(R.drawable.drawer_error)
+                .into(holder.imageView);
         holder.itemView.setTag(girl);
 
         final String url = this.get(position).getUrl();
