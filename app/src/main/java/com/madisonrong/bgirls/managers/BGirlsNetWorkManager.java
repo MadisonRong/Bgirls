@@ -3,6 +3,8 @@ package com.madisonrong.bgirls.managers;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.madisonrong.bgirls.models.Girl;
 import com.madisonrong.bgirls.network.retrofit.BGirlsClient;
 import com.madisonrong.bgirls.network.retrofit.RetrofitGenerator;
 import com.madisonrong.bgirls.network.volley.BGirlsHttpRequest;
+import com.madisonrong.bgirls.views.adapters.BGirlsPagerAdapter;
 import com.madisonrong.bgirls.views.adapters.BGirlsRecyclerViewAdapter;
 import com.madisonrong.bgirls.views.adapters.BaseRecyclerViewAdapter;
 import com.squareup.picasso.Picasso;
@@ -36,12 +39,21 @@ public class BGirlsNetWorkManager {
 
     private Context ctx;
     private BaseRecyclerViewAdapter adapter;
-    private ReentrantLock lock = new ReentrantLock();
-    public static boolean isLoading = false;
+    private BGirlsPagerAdapter bGirlsPagerAdapter;
+    private TabLayout tabLayout;
 
     public BGirlsNetWorkManager(Context ctx, BaseRecyclerViewAdapter adapter) {
         this.adapter = adapter;
         this.ctx = ctx;
+    }
+
+    public BGirlsNetWorkManager(Context ctx, BGirlsPagerAdapter bGirlsPagerAdapter) {
+        this.ctx = ctx;
+        this.bGirlsPagerAdapter = bGirlsPagerAdapter;
+    }
+
+    public void setTabLayout(TabLayout tabLayout) {
+        this.tabLayout = tabLayout;
     }
 
     /**
@@ -49,7 +61,6 @@ public class BGirlsNetWorkManager {
      * @param page 请求的页数
      */
     public synchronized void getList(int page) {
-        isLoading = true;
         BGirlsClient client = RetrofitGenerator.getService(BGirlsClient.class, BGirls.HOME_BASE_URL);
         client.getPage(page, new Callback<String>() {
             @Override
@@ -69,7 +80,6 @@ public class BGirlsNetWorkManager {
                     girl.setImgUrl(img);
                     adapter.add(girl);
                 }
-                isLoading = false;
             }
 
             @Override
@@ -91,9 +101,19 @@ public class BGirlsNetWorkManager {
                 Pattern pattern = Pattern.compile("<img src=\"(.*?)\"/>");
                 Matcher matcher = pattern.matcher(s);
                 while (matcher.find()) {
-                    Girl girl = new Girl();
-                    girl.setImgUrl(matcher.group(1));
-                    adapter.add(0, girl);
+                    String imgUrl = matcher.group(1);
+                    ImageView imageView = new ImageView(ctx);
+                    Picasso.with(ctx)
+                            .load(imgUrl)
+                            .into(imageView);
+                    bGirlsPagerAdapter.add(imageView);
+                    if (tabLayout != null) {
+                        ImageView imageView1 = new ImageView(ctx);
+                        Picasso.with(ctx)
+                                .load(imgUrl.replace("thumbnail=1680x0&quality=96", "thumbnail=100x0&quality=100"))
+                                .into(imageView1);
+                        tabLayout.addTab(tabLayout.newTab().setCustomView(imageView1));
+                    }
                 }
             }
 

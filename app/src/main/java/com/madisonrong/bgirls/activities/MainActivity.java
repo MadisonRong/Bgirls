@@ -2,6 +2,7 @@ package com.madisonrong.bgirls.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -135,12 +136,10 @@ public class MainActivity extends ActionBarActivity
 //                Toast.makeText(MainActivity.this, "haha", Toast.LENGTH_SHORT).show();
 //                break;
             case R.id.action_disclaimers:
-                Toast.makeText(MainActivity.this, R.string.toast_disclaimers, Toast.LENGTH_SHORT).show();
-                break;
-            default: break;
+                Snackbar.make(MainActivity.this.findViewById(R.id.container), R.string.toast_disclaimers, Snackbar.LENGTH_SHORT).show();
+                return true;
+            default: return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
