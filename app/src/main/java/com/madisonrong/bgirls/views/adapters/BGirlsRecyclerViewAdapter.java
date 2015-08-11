@@ -2,6 +2,7 @@ package com.madisonrong.bgirls.views.adapters;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -58,11 +59,12 @@ public class BGirlsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGi
         holder.itemView.setTag(girl);
 
         final String url = this.get(position).getUrl();
+        final String description = this.get(position).getDescription().replaceAll("&nbsp;", " ");
         //设置监听器
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DetailActivity.actionStart(v.getContext(), url);
+                DetailActivity.actionStart(v.getContext(), url, description);
             }
         });
     }

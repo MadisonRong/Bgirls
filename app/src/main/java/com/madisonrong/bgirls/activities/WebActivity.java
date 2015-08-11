@@ -16,7 +16,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TestActivity extends ActionBarActivity {
+public class WebActivity extends ActionBarActivity {
 
     private WebView webView;
 
@@ -74,7 +74,7 @@ public class TestActivity extends ActionBarActivity {
     }
 
     public static void actionStart(Context context){
-        Intent intent = new Intent(context, TestActivity.class);
+        Intent intent = new Intent(context, WebActivity.class);
         context.startActivity(intent);
     }
 }

@@ -2,8 +2,8 @@
     <string name="app_name">Bgirls</string>
 
     <string name="title_section1">首页</string>
-    <string name="title_section2">分类1</string>
-    <string name="title_section3">分类2</string>
+    <string name="title_section2">网页版</string>
+    <string name="title_section3">关于</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

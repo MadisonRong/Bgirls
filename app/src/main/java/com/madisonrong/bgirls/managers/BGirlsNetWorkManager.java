@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.madisonrong.bgirls.R;
 import com.madisonrong.bgirls.activities.DetailActivity;
 import com.madisonrong.bgirls.constant.BGirls;
+import com.madisonrong.bgirls.fragments.DetailFragment;
 import com.madisonrong.bgirls.models.Girl;
 import com.madisonrong.bgirls.network.retrofit.BGirlsClient;
 import com.madisonrong.bgirls.network.retrofit.RetrofitGenerator;
@@ -21,6 +25,7 @@ import com.madisonrong.bgirls.network.volley.BGirlsHttpRequest;
 import com.madisonrong.bgirls.views.adapters.BGirlsPagerAdapter;
 import com.madisonrong.bgirls.views.adapters.BGirlsRecyclerViewAdapter;
 import com.madisonrong.bgirls.views.adapters.BaseRecyclerViewAdapter;
+import com.madisonrong.bgirls.views.widgets.ZoomImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -102,11 +107,25 @@ public class BGirlsNetWorkManager {
                 Matcher matcher = pattern.matcher(s);
                 while (matcher.find()) {
                     String imgUrl = matcher.group(1);
-                    ImageView imageView = new ImageView(ctx);
+                    final ImageView imageView = new ImageView(ctx);
+//                    final ZoomImageView zoomImageView = new ZoomImageView(ctx, null);
                     Picasso.with(ctx)
                             .load(imgUrl)
                             .into(imageView);
+//                    zoomImageView.setImageBitmap(imageView.getDrawingCache());
                     bGirlsPagerAdapter.add(imageView);
+//                    imageView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            FragmentActivity fragmentActivity = (FragmentActivity) ctx;
+//                            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+//                            DetailFragment detailFragment = DetailFragment.newInstance(bGirlsPagerAdapter.indexOf(imageView));
+//                            detailFragment.setupAdapter(bGirlsPagerAdapter);
+//                            fragmentManager.beginTransaction()
+//                                    .replace(R.id.activity_detail_layout, detailFragment)
+//                                    .commit();
+//                        }
+//                    });
                     if (tabLayout != null) {
                         ImageView imageView1 = new ImageView(ctx);
                         Picasso.with(ctx)

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TestActivity"
+            android:name=".activities.WebActivity"
             android:label="@string/title_activity_test"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
