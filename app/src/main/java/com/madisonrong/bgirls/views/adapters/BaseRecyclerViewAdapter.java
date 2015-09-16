@@ -21,8 +21,8 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHol
         list = new ArrayList<T>();
     }
 
-    public BaseRecyclerViewAdapter(int cappacity){
-        list = new ArrayList<T>(cappacity);
+    public BaseRecyclerViewAdapter(int capacity){
+        list = new ArrayList<T>(capacity);
     }
 
     public BaseRecyclerViewAdapter(Collection<? extends T> collection) {

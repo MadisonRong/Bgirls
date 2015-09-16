@@ -25,8 +25,8 @@ public class BGirlsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Girl, BGi
         this.activity = activity;
     }
 
-    public BGirlsRecyclerViewAdapter(int cappacity, Activity activity) {
-        super(cappacity);
+    public BGirlsRecyclerViewAdapter(int capacity, Activity activity) {
+        super(capacity);
         this.activity = activity;
     }
 
