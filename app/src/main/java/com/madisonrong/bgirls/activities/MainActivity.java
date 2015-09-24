@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initFragmentView(getSupportFragmentManager());
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -43,6 +45,13 @@ public class MainActivity extends AppCompatActivity
 
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         setupDrawerContent(mNavigationView);
+    }
+
+    private void initFragmentView(FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_content, HomeFragment.newInstance())
+                .addToBackStack("home")
+                .commit();
     }
 
     //设置NavigationView点击事件
