@@ -111,6 +111,7 @@ public class BGirlsNetWorkManager {
 //                    final ZoomImageView zoomImageView = new ZoomImageView(ctx, null);
                     Picasso.with(ctx)
                             .load(imgUrl)
+                            .placeholder(R.drawable.drawer_loading)
                             .into(imageView);
 //                    zoomImageView.setImageBitmap(imageView.getDrawingCache());
                     bGirlsPagerAdapter.add(imageView);
@@ -130,6 +131,7 @@ public class BGirlsNetWorkManager {
                         ImageView imageView1 = new ImageView(ctx);
                         Picasso.with(ctx)
                                 .load(imgUrl.replace("thumbnail=1680x0&quality=96", "thumbnail=100x0&quality=100"))
+                                .placeholder(R.drawable.drawer_loading)
                                 .into(imageView1);
                         tabLayout.addTab(tabLayout.newTab().setCustomView(imageView1));
                     }
