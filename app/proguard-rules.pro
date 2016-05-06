@@ -15,3 +15,25 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#-keeppackagenames android.**
+#-keeppackagenames rx.**
+#-keeppackagenames com.google.appengine.api.**
+#-keeppackagenames java.**
+
+-dontwarn java.**
+-dontwarn rx.**
+-dontwarn com.google.appengine.api.*.**
+-keepnames class java.** { *; }
+-keepnames class rx.** { *; }
+-keepnames class com.google.appengine.api.*.** { *; }
+#okhttp框架的混淆
+-dontwarn com.squareup.okhttp.internal.http.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-keepnames class com.levelup.http.okhttp.** { *; }
+-keepnames interface com.levelup.http.okhttp.** { *; }
+-keepnames class com.squareup.okhttp.** { *; }
+-keepnames interface com.squareup.okhttp.** { *; }
+#support v7
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
