@@ -14,5 +14,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowExitTransition">@transition/slide_explode</item>
         <item name="android:windowReenterTransition">@android:transition/slide_top</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="AppTheme.Explode" parent="AppTheme.NoActionBar">
+        <item name="android:windowExitTransition">@transition/slide_explode</item>
+        <item name="android:windowReenterTransition">@android:transition/slide_top</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 </resources>

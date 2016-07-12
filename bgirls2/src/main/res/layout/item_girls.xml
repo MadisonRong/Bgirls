@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:card="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_margin="2dp"-->
-    <!--card:cardPreventCornerOverlap="true"-->
-    <!--card:contentPadding="0dp"-->
-    <!--card:cardElevation="5dp"-->
-    <!--card:cardCornerRadius="5dp">-->
-
-    <!--<ImageView-->
-        <!--android:id="@+id/item_girls_image"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--tools:ignore="ContentDescription" />-->
-
-<!--</android.support.v7.widget.CardView>-->
-
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/item_girls_image"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-tools:ignore="ContentDescription" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_margin="2dp"
+    card:cardPreventCornerOverlap="true"
+    card:contentPadding="0dp"
+    card:cardElevation="5dp"
+    card:cardCornerRadius="5dp">
+
+    <ImageView
+        android:id="@+id/item_girls_image"
+        android:layout_width="@dimen/item_girls_width"
+        android:layout_height="@dimen/item_girls_height"
+        tools:ignore="ContentDescription" />
+
+</android.support.v7.widget.CardView>

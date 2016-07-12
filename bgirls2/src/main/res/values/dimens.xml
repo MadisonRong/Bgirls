@@ -2,4 +2,14 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="activity_detail_show_girl_padding">16dp</dimen>
+    <dimen name="activity_detail_show_girl_tab_margin">3dp</dimen>
+    <dimen name="activity_detail_show_girl_indicator_margin_bottom">10dp</dimen>
+
+    <dimen name="item_girls_width">200dp</dimen>
+    <dimen name="item_girls_height">300dp</dimen>
 </resources>

@@ -5,5 +5,6 @@ package com.madisonrong.bgirls2.config;
  */
 public class BgirlConfig {
 
-    public static final String BASE_URL = "http://sexy.faceks.com/";
+//    public static final String BASE_URL = "http://sexy.faceks.com/";
+    public static final String BASE_URL = "http://www.fydzv.com/";
 }

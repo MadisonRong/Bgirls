@@ -10,9 +10,13 @@ import rx.Observable;
  * Created by MadisonRong on 15/7/29.
  */
 public interface BGirlsClient {
-    @GET("/")
-    Observable<ResponseBody> getPage(@Query("page") int page);
+    @GET("/category/siwa/{page}.html")
+    Observable<ResponseBody> getPage(@Path("page") String page);
 
-    @GET("/post/{id}")
+    @GET("/pic/{id}.html")
     Observable<ResponseBody> getGirl(@Path("id") String id);
+
+    @GET("/api.php")
+    Observable<ResponseBody> getGirlPic(@Query("op") String op,
+                                        @Query("id") String id);
 }

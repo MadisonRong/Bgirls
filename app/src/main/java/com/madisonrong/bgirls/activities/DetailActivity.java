@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra(DetailActivity.URL);
         int position = url.lastIndexOf("/");
-        String id = url.substring(position);
+        String id = url.substring(position + 1).split(".html")[0];
         Log.e("bgils.id", id);
 
         setTitle(intent.getStringExtra(DetailActivity.DESC));
